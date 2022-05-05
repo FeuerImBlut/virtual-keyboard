@@ -5,8 +5,8 @@
 
 .container {
     background-color: rgba(175, 171, 171, 0.602);
-    width: 80vw;
-    height: 70vh;
+    width: 1280px;
+    height: 768px;
     margin: 10vh auto;
     display: flex;
     flex-direction: column;
@@ -14,36 +14,82 @@
     justify-content: space-between;
 }
 
-#input-area {
-    display: block;
+textarea {
+    padding: 5px;
 }
 
 .keyboard {
     background-color: rgba(0, 128, 0, 0.564);
-    height: 80%;
-    width: 90%;
+    height: 60%;
+    width: 100%;
     user-select: none;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
     color: rgb(200, 200, 200);
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 0.5%;
+    width: 100%;
+    height: 18%;
+}
+
 .keyboard-key {
+    height: 100%;
     display: block;
-    height: 15%;
-    width: calc(100% / 13);
     border: none;
     border-radius: 15px;
     background-color: rgb(82, 25, 136);
-    font-size: 2vw;
+    font-size: 26px;
     color: inherit;
-    /* flex-grow: 2; */
+    flex-basis: calc(100% / 17);
+    transition: ease-out 0.3s;
 }
 
-.keyboard-key:nth-child(-n+13) {
-    width: calc(100% / 16);
+.keyboard-key.active {
+    background-color: rgb(117, 93, 139);
+    border-radius: 20px;
+    /* font-size: 20px; */
+    transform: scale3d(0.95, 0.95, 1);
+
 }
 
-.keyboard-key:active {
-    background-color: rgb(125, 90, 155);
+.Backspace {
+    flex-grow: 0.8;
+}
+
+.Tab {
+    flex-grow: 0.9;
+}
+
+.CapsLock {
+    flex-grow: 0.5;
+}
+
+.Enter {
+    flex-grow: 0.5;
+}
+
+.ShiftLeft {
+    flex-grow: 1;
+}
+
+.ShiftRight {
+    flex-grow: 0.8;
+}
+
+.Space {
+    flex-grow: 1;
+}
+
+.ControlRight {
+    flex-grow: 0.04;
+}
+
+.ControlLeft {
+    flex-grow: 0.04;
 }
