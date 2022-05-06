@@ -382,13 +382,13 @@ const keys = {
       lowerCase: '\\',
       upperCase: '|',
       caps: '\\',
-      shiftCas: '|'
+      capsShift: '|'
     },
     ru: {
       lowerCase: '\\',
       upperCase: '|',
       caps: '\\',
-      shiftCas: '|'
+      capsShift: '|'
     }
   },
   Del: {
@@ -903,16 +903,16 @@ const specials = [
   "CapsLock",
   "Enter",
   "ShiftLeft",
-  "ArrowUp",
   "ShiftRight",
   "ControlLeft",
   "MetaLeft",
   "AltLeft",
   "Space",
   "AltRight",
-  "ArrowLeft",
-  "ArrowDown",
-  "ArrowRight",
+  // "ArrowUp",
+  // "ArrowLeft",
+  // "ArrowDown",
+  // "ArrowRight",
   "ControlRight"
 ]
 export { keys, specials };
