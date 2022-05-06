@@ -5,7 +5,7 @@ class virtualKeyboard {
     constructor() {
         this.capsLock = false;
         this.shift = false;
-        this.lang = 'en';
+        this.lang =  (localStorage.lang) ? localStorage.lang : 'en';
         this.keyNames = Object.keys(keys); //array of all keys codes
         this.specials = Array.from(specials); //array of specials codes
         this.keyboard; //all keys
@@ -196,6 +196,7 @@ class virtualKeyboard {
             this.lang = 'ru';
         }
         this.capitalizeLetters(this.notSpecials);
+        localStorage.setItem("lang", this.lang)
     }
 
 
