@@ -5,7 +5,7 @@ class virtualKeyboard {
     constructor() {
         this.capsLock = false;
         this.shift = false;
-        this.lang =  (localStorage.lang) ? localStorage.lang : 'en';
+        this.lang = (localStorage.lang) ? localStorage.lang : 'en';
         this.keyNames = Object.keys(keys); //array of all keys codes
         this.specials = Array.from(specials); //array of specials codes
         this.keyboard; //all keys
@@ -114,7 +114,7 @@ class virtualKeyboard {
             }
             else if (element.dataset.Key == 'ShiftLeft' || element.dataset.Key == 'ShiftRight') {
                 element.addEventListener('mousedown', () => {
-                    this.toggleShift();
+                    this.toggleShift(true);
                 });
             }
             element.addEventListener('mousedown', (e) => {
@@ -128,8 +128,8 @@ class virtualKeyboard {
         document.addEventListener('mouseup', () => {
             virtualKeys.forEach(element => {
                 element.classList.remove('active');
-                this.shift = false;
-                this.capitalizeLetters(this.keyboard);
+                this.toggleShift(false);
+                // this.capitalizeLetters(this.keyboard);
             });
         });
 
@@ -138,6 +138,7 @@ class virtualKeyboard {
             e.preventDefault();
             //simultaneously press
             pressed.add(e.code);
+            console.log(e.code);
             for (let code of codes) {
                 if (pressed.has('ControlLeft') && pressed.has('AltLeft')) {
                     this.switchLanguage();
@@ -157,7 +158,7 @@ class virtualKeyboard {
                     this.deletesymbol('b');
                 }
                 else if (e.code == 'ShiftLeft' || e.code == 'ShiftRight') {
-                    this.toggleShift();
+                    this.toggleShift(true);
                 }
             }
         });
@@ -168,6 +169,9 @@ class virtualKeyboard {
             const oneKey = document.querySelector(`.${e.code}`);
             oneKey.classList.remove('active');
             pressed.clear();
+            if (e.code == 'ShiftLeft' || e.code == 'ShiftRight') {
+                this.toggleShift(false);
+            }
         });
     }
     // caps lock toggle
@@ -182,9 +186,8 @@ class virtualKeyboard {
         this.capitalizeLetters(this.keyLetters);
     }
 
-    toggleShift() {
-        if (this.shift == true) this.shift = false;
-        else this.shift = true;
+    toggleShift(value) {
+        this.shift = value;
         this.capitalizeLetters(this.notSpecials);
     }
 
@@ -233,17 +236,19 @@ class virtualKeyboard {
     }
 
     deletesymbol(dir) {
-        console.log(this.textArea.selectionStart + ' ' + this.textArea.selectionStart);
+        console.log(this.textArea.selectionStart + ' ' + this.textArea.selectionEnd);
         let startSel = this.textArea.selectionStart;
         let endSel = this.textArea.selectionEnd;
-        let strEnd = this.textArea.value.length - 1;
+        let strEnd = this.textArea.value.length;
         if (dir == 'b' && startSel != 0) {
             if (startSel == endSel) {
                 //delete one symbol backward
-                this.textArea.value = this.textArea.value.slice(0, startSel - 1) //+ this.textArea.value.slice(startSel, strEnd + 1);
-                this.textArea.selectionStart = startSel;
-                this.textArea.selectionStart = this.textArea.selectionStart;
-                console.log(this.textArea.selectionStart + ' ' + this.textArea.selectionStart);
+                this.textArea.value = this.textArea.value.slice(0, startSel - 1) + this.textArea.value.slice(startSel, strEnd);
+                console.log(this.textArea);
+                this.textArea.focus();
+                this.textArea.selectionStart = startSel - 1;
+                this.textArea.selectionEnd = startSel - 1;
+                console.log(this.textArea.selectionStart + ' ' + this.textArea.selectionEnd);
 
                 // if (startSel >= this.textArea.value.length) {
                 //     this.textArea.selectionStart = this.textArea.value.length - 1;
@@ -252,6 +257,9 @@ class virtualKeyboard {
             }
             else {
                 this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(endSel, strEnd + 1);
+                this.textArea.focus();
+
+                this.textArea.selectionEnd = startSel - 1 - (endSel - startSel);
             }
 
         }
