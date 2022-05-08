@@ -117,7 +117,13 @@ class virtualKeyboard {
                     this.toggleShift(true);
                 });
             }
+            else if (element.dataset.Key == 'Enter') {
+                element.addEventListener('click', (e) => {
+                    this.inputCharacter(e.target.dataset.Key, false);
+                });
+            }
             element.addEventListener('mousedown', (e) => {
+                e.preventDefault();
                 element.classList.add('active');
                 if (!this.specials.includes(e.target.dataset.Key))
                     this.inputCharacter(e.target.dataset.Key);
@@ -157,8 +163,17 @@ class virtualKeyboard {
                 else if (e.code == 'Backspace') {
                     this.deletesymbol('b');
                 }
+                else if (e.code == 'Delete') {
+                    this.deletesymbol('f');
+                }
                 else if (e.code == 'ShiftLeft' || e.code == 'ShiftRight') {
                     this.toggleShift(true);
+                }
+                else if (e.code == 'Tab') {
+                    this.inputCharacter(e.code, false);
+                }
+                else if (e.code == 'Enter') {
+                    this.inputCharacter(e.code, false);
                 }
             }
         });
@@ -225,14 +240,27 @@ class virtualKeyboard {
 
     // input characters in textarea
     inputCharacter(code, flag = true) {
-        let lang = this.lang;
-        let symb = 'lowerCase';
-        if (this.capsLock) {
-            if (this.shift) symb = 'capsShift';
-            else symb = 'caps';
+        let startSel = this.textArea.selectionStart;
+        let endSel = this.textArea.selectionEnd;
+        let strEnd = this.textArea.value.length;
+        let symbol = ""
+        if (flag == false) {
+            if (code == 'Tab') symbol = "\t";
+            if (code == 'Enter') symbol = "\n";
         }
-        else if (this.shift) symb = 'upperCase';
-        this.textArea.value += keys[code][lang][symb];
+        else {
+            let lang = this.lang;
+            let symb = 'lowerCase';
+            if (this.capsLock) {
+                if (this.shift) symb = 'capsShift';
+                else symb = 'caps';
+            }
+            else if (this.shift) symb = 'upperCase';
+            symbol = keys[code][lang][symb];
+        }
+        this.textArea.value = this.textArea.value.slice(0, startSel) + symbol + this.textArea.value.slice(startSel, strEnd);
+        this.textArea.selectionEnd = startSel+1;
+        this.textArea.focus();
     }
 
     deletesymbol(dir) {
@@ -249,19 +277,28 @@ class virtualKeyboard {
                 this.textArea.selectionStart = startSel - 1;
                 this.textArea.selectionEnd = startSel - 1;
                 console.log(this.textArea.selectionStart + ' ' + this.textArea.selectionEnd);
-
-                // if (startSel >= this.textArea.value.length) {
-                //     this.textArea.selectionStart = this.textArea.value.length - 1;
-                //     this.textArea.selectionEnd = this.textArea.value.length - 1;
-                // }
             }
             else {
-                this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(endSel, strEnd + 1);
+                this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(endSel, strEnd);
                 this.textArea.focus();
-
-                this.textArea.selectionEnd = startSel - 1 - (endSel - startSel);
+                this.textArea.selectionEnd = startSel;  //- (endSel - startSel);
             }
-
+        }
+        else if (dir == 'f' && startSel != strEnd) {
+            if (startSel == endSel) {
+                //delete one symbol backward
+                this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(startSel + 1, strEnd);
+                console.log(this.textArea);
+                this.textArea.focus();
+                this.textArea.selectionStart = startSel;
+                this.textArea.selectionEnd = startSel;
+                console.log(this.textArea.selectionStart + ' ' + this.textArea.selectionEnd);
+            }
+            else {
+                this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(endSel, strEnd);
+                this.textArea.focus();
+                this.textArea.selectionEnd = startSel;  //- (endSel - startSel);
+            }
         }
     }
 }

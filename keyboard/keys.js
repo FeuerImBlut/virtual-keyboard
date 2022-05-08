@@ -36,9 +36,9 @@ const keys = {
     },
     ru: {
       lowerCase: '2',
-      upperCase: '""',
+      upperCase: '"',
       caps: '2',
-      capsShift: '""'
+      capsShift: '"'
     }
   },
   Digit3: {
