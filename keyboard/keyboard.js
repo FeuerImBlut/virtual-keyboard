@@ -238,7 +238,6 @@ class virtualKeyboard {
     // input characters in textarea
     inputCharacter(code, flag = true) {
         let startSel = this.textArea.selectionStart;
-        // let endSel = this.textArea.selectionEnd;
         let strEnd = this.textArea.value.length;
         let symbol = "";
         if (flag == false) {
@@ -284,7 +283,7 @@ class virtualKeyboard {
             else {
                 this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(endSel, strEnd);
                 this.textArea.focus();
-                this.textArea.selectionEnd = startSel;  //- (endSel - startSel);
+                this.textArea.selectionEnd = startSel;
             }
         }
         else if (dir == "f" && startSel != strEnd) {
@@ -300,7 +299,7 @@ class virtualKeyboard {
             else {
                 this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(endSel, strEnd);
                 this.textArea.focus();
-                this.textArea.selectionEnd = startSel;  //- (endSel - startSel);
+                this.textArea.selectionEnd = startSel;
             }
         }
     }
