@@ -100,6 +100,7 @@ class virtualKeyboard {
     keysBackLight() {
         let pressed = new Set();
         const virtualKeys = document.querySelectorAll(".keyboard-key");
+        const capsLock = document.querySelector(".CapsLock");
         virtualKeys.forEach(element => {
             if (element.dataset.Key == "Backspace") {
                 element.addEventListener("mousedown", () => {
@@ -113,6 +114,7 @@ class virtualKeyboard {
             }
             else if (element.dataset.Key == "CapsLock") {
                 element.addEventListener("click", () => {
+                    capsLock.classList.toggle("caps");
                     this.toggleCapsLock();
                 });
             }
@@ -169,6 +171,7 @@ class virtualKeyboard {
             else {
                 if (e.code == "CapsLock") {
                     this.toggleCapsLock();
+                    capsLock.classList.toggle("caps");
                 }
                 else if (e.code == "Backspace") {
                     this.deletesymbol("b");
