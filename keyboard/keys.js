@@ -896,6 +896,7 @@ const keys = {
     }
   }
 };
+
 const specials = [
   "Backspace",
   "Tab",
