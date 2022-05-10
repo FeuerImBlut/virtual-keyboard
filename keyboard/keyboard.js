@@ -100,6 +100,7 @@ class virtualKeyboard {
     keysBackLight() {
         let pressed = new Set();
         const virtualKeys = document.querySelectorAll(".keyboard-key");
+        const capsLock = document.querySelector(".CapsLock");
         virtualKeys.forEach(element => {
             if (element.dataset.Key == "Backspace") {
                 element.addEventListener("mousedown", () => {
@@ -113,6 +114,7 @@ class virtualKeyboard {
             }
             else if (element.dataset.Key == "CapsLock") {
                 element.addEventListener("click", () => {
+                    capsLock.classList.toggle("caps");
                     this.toggleCapsLock();
                 });
             }
@@ -169,6 +171,7 @@ class virtualKeyboard {
             else {
                 if (e.code == "CapsLock") {
                     this.toggleCapsLock();
+                    capsLock.classList.toggle("caps");
                 }
                 else if (e.code == "Backspace") {
                     this.deletesymbol("b");
@@ -238,6 +241,7 @@ class virtualKeyboard {
     // input characters in textarea
     inputCharacter(code, flag = true) {
         let startSel = this.textArea.selectionStart;
+        // let endSel = this.textArea.selectionEnd;
         let strEnd = this.textArea.value.length;
         let symbol = "";
         if (flag == false) {
@@ -283,7 +287,7 @@ class virtualKeyboard {
             else {
                 this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(endSel, strEnd);
                 this.textArea.focus();
-                this.textArea.selectionEnd = startSel;
+                this.textArea.selectionEnd = startSel;  //- (endSel - startSel);
             }
         }
         else if (dir == "f" && startSel != strEnd) {
@@ -299,7 +303,7 @@ class virtualKeyboard {
             else {
                 this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(endSel, strEnd);
                 this.textArea.focus();
-                this.textArea.selectionEnd = startSel;
+                this.textArea.selectionEnd = startSel;  //- (endSel - startSel);
             }
         }
     }
