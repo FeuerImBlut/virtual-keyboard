@@ -158,7 +158,6 @@ class virtualKeyboard {
             e.preventDefault();
             //simultaneously press
             pressed.add(e.code);
-            console.log(e.code);
                 if (pressed.has("ControlLeft") && pressed.has("AltLeft")) {
                     this.switchLanguage();
                     pressed.clear();
