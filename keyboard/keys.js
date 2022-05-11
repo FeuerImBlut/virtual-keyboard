@@ -391,7 +391,7 @@ const keys = {
       capsShift: "|"
     }
   },
-  Del: {
+  Delete: {
     en: {
       lowerCase: "Del",
       upperCase: "Del",
@@ -900,7 +900,7 @@ const keys = {
 const specials = [
   "Backspace",
   "Tab",
-  "Del",
+  "Delete",
   "CapsLock",
   "Enter",
   "ShiftLeft",

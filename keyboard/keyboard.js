@@ -158,7 +158,6 @@ class virtualKeyboard {
             e.preventDefault();
             //simultaneously press
             pressed.add(e.code);
-            console.log(e.code);
                 if (pressed.has("ControlLeft") && pressed.has("AltLeft")) {
                     this.switchLanguage();
                     pressed.clear();
@@ -265,7 +264,6 @@ class virtualKeyboard {
     }
 
     deletesymbol(dir) {
-        console.log(this.textArea.selectionStart + " " + this.textArea.selectionEnd);
         let startSel = this.textArea.selectionStart;
         let endSel = this.textArea.selectionEnd;
         let strEnd = this.textArea.value.length;
@@ -278,11 +276,9 @@ class virtualKeyboard {
             if (startSel == endSel) {
                 //delete one symbol backward
                 this.textArea.value = this.textArea.value.slice(0, startSel - 1) + this.textArea.value.slice(startSel, strEnd);
-                console.log(this.textArea);
                 this.textArea.focus();
                 this.textArea.selectionStart = startSel - 1;
                 this.textArea.selectionEnd = startSel - 1;
-                console.log(this.textArea.selectionStart + " " + this.textArea.selectionEnd);
             }
             else {
                 this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(endSel, strEnd);
@@ -294,11 +290,9 @@ class virtualKeyboard {
             if (startSel == endSel) {
                 //delete one symbol backward
                 this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(startSel + 1, strEnd);
-                console.log(this.textArea);
                 this.textArea.focus();
                 this.textArea.selectionStart = startSel;
                 this.textArea.selectionEnd = startSel;
-                console.log(this.textArea.selectionStart + " " + this.textArea.selectionEnd);
             }
             else {
                 this.textArea.value = this.textArea.value.slice(0, startSel) + this.textArea.value.slice(endSel, strEnd);
